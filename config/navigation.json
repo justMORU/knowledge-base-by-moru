@@ -1,0 +1,55 @@
+{
+    "nav-sections": [
+        {
+            "title": "test",
+            "pages": [
+                "test"
+            ]
+        },
+        {
+            "title": "Home",
+            "pages": [
+                "home"
+            ]
+        },
+        {
+            "title": "WEB basics",
+            "pages": [
+                ""
+            ]
+        },
+        {
+            "title": "HTML",
+            "pages": [
+                "html-history",
+                "html-basics",
+                "all-html-tags"
+            ]
+        },
+        {
+            "title": "CSS",
+            "pages": [
+                "css-history"
+            ]
+        },
+        {
+            "title": "JavaScript",
+            "pages": [
+                "javascript-history",
+                "javascript-basics"
+            ]
+        },
+        {
+            "title": "Git and GitHub",
+            "pages": [
+                "git-and-github-history"
+            ]
+        },
+        {
+            "title": "My projects",
+            "pages": [
+                "nothing"
+            ]
+        }
+    ]
+}

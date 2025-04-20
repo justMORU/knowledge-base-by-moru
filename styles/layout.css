@@ -1,0 +1,44 @@
+@import './variables.css';
+
+.header {
+  position: fixed;
+  width: 100%;
+  display: grid;
+  grid-template-columns: var(--menu-width) 1fr auto;
+  grid-gap: var(--padding-medium);
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-black);
+  z-index: 999;
+  /* transform: translateY(0); */
+  transition: transform var(--transition-duration) ease;
+  will-change: transform;
+}
+
+.menu {
+  position: fixed;
+  min-width: var(--menu-width);
+  max-width: var(--menu-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--header-height, 0);
+  background-color: var(--color-white);
+  border-right: 1px solid var(--color-black);
+  transition: left var(--transition-duration) ease, transform var(--transition-duration) ease;
+  z-index: 999;
+  /* transform: translateY(0); */
+  will-change: transform;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--menu-width);
+  transition: padding-left var(--transition-duration) ease;
+}
+
+.main__footer {
+  padding: var(--padding-small) var(--padding-medium);
+  background-color: var(--color-black);
+  color: var(--color-white);
+}

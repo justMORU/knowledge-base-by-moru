@@ -1,0 +1,5 @@
+@import '../variables.css';
+
+.main__footer-copyright {
+  font-size: var(--font-size-normal);
+}

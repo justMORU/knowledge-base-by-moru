@@ -1,0 +1,42 @@
+{
+    "test": {
+        "title": "test",
+        "last-updated-time": "NaN"
+    },
+    "home": {
+        "title": "Home",
+        "last-updated-time": "26.02.25"
+    },
+    "html-history": {
+        "title": "HTML history (briefly)",
+        "last-updated-time": "23.02.25"
+    },
+    "css-history": {
+        "title": "CSS history (briefly)",
+        "last-updated-time": "23.02.25"
+    },
+    "javascript-history": {
+        "title": "JavaScript history (briefly)",
+        "last-updated-time": "17.02.25"
+    },
+    "git-and-github-history": {
+        "title": "Git and GitHub history (briefly)",
+        "last-updated-time": "17.02.25"
+    },
+    "nothing": {
+        "title": "nothing",
+        "last-updated-time": "23.02.25"
+    },
+    "html-basics": {
+        "title": "HTML basics (empty)",
+        "last-updated-time": "26.02.25"
+    },
+    "all-html-tags": {
+        "title": "All HTML tags (empty)",
+        "last-updated-time": "26.02.25"
+    },
+    "javascript-basics": {
+        "title": "JavaScript basics (empty)",
+        "last-updated-time": "26.02.25"
+    }
+}

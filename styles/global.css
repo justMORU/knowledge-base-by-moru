@@ -1,0 +1,12 @@
+@import './reset.css';
+@import './layout.css';
+@import './media.css';
+
+@import './root-sections/header.css';
+@import './root-sections/menu.css';
+@import './root-sections/main.css';
+@import './root-sections/footer.css';
+
+@import './main-sections/page.css';
+
+@import './menu-sections/navigation.css';

@@ -1,0 +1,18 @@
+@import '../variables.css';
+
+.menu__header {
+  padding: var(--padding-medium);
+}
+.menu__title {
+  font-weight: 600;
+  font-size: var(--font-size-medium);
+}
+.menu__content {
+  flex-grow: 1;
+  display: inherit;
+  flex-direction: inherit;
+  gap: var(--padding-medium);
+  padding: 0 var(--padding-medium);
+  padding-bottom: var(--padding-medium);
+  overflow-y: auto;
+}

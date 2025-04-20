@@ -1,0 +1,68 @@
+@import '../variables.css';
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-medium);
+}
+.nav__section {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-black);
+  border-radius: var(--border-radius);
+}
+
+.nav__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding-small);
+  background-color: var(--color-light-gray);
+  outline: 1px solid var(--color-black);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.nav__section-title {
+  font-weight: 600;
+  font-size: var(--font-size-medium);
+}
+
+.nav__section-indicator {
+  width: 1em;
+  transition: transform var(--transition-duration) ease;
+}
+
+.nav__section-indicator.active {
+  transform: rotateX(180deg);
+}
+
+.nav__section-content {
+  height: 0;
+  overflow: hidden;
+  transition: height var(--transition-duration) ease;
+}
+
+.nav__section-content-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-small);
+  padding: var(--padding-small);
+}
+
+.nav__section-link {
+  transition: color var(--transition-duration) ease;
+}
+
+.nav__section-link:hover {
+  color: var(--color-gray);
+  cursor: pointer;
+}
+
+.nav__section-link.inactive {
+  color: var(--color-gray);
+}
+
+.nav__section-link.inactive:hover {
+  cursor: default;
+}

@@ -1,0 +1,22 @@
+:root {
+  --padding-extra-small: 0.2em;
+  --padding-small: 0.4em;
+  --padding-normal: 0.6em;
+  --padding-medium: 0.8em;
+
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray: #787878;
+  --color-light-gray: rgba(0, 0, 0, 0.1);
+
+  --font-family: "Roboto Mono", serif;
+  --font-size-small: 14px;
+  --font-size-normal: 16px;
+  --font-size-medium: 18px;
+  --font-size-large: 20px;
+
+  --border-radius: 4px;
+  --transition-duration: 0.2s;
+
+  --menu-width: 320px;
+}
