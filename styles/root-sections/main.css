@@ -2,18 +2,18 @@
 
 .main__inner {
   flex-grow: 1;
-  margin: 0 auto;
-  padding: var(--padding-medium);
   width: 100%;
   max-width: 1200px;
-  display: inherit;
-  flex-direction: inherit;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: var(--padding-medium);
 }
 
 .page {
   flex-grow: 1;
   width: 100%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   display: inherit;
   flex-direction: inherit;
   gap: var(--padding-medium);
@@ -22,8 +22,9 @@
 .page__header {
   display: inherit;
   flex-direction: inherit;
-  padding-bottom: var(--padding-medium);
-  border-bottom: 1px solid var(--color-black);
+  padding: var(--padding-small)  var(--padding-medium);
+  border: 1px solid var(--color-black);
+  border-radius: var(--border-radius);
 }
 
 .page__title {
@@ -32,7 +33,7 @@
 }
 
 .page__description {
-  font-size: var(--font-size-normal);
+  font-size: var(--font-size-small);
   color: var(--color-gray);
 }
 

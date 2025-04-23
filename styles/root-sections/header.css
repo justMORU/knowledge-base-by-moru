@@ -5,8 +5,8 @@
   grid-template-columns: auto 1fr;
   justify-items: center;
   align-items: center;
-  padding: var(--padding-extra-small) var(--padding-medium);
-  padding-right: 0;
+  grid-gap: var(--padding-medium);
+  padding: 0 var(--padding-medium);
 }
 
 .header__menu-toggle {

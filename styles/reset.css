@@ -13,7 +13,7 @@ html {
 }
 
 /* Remove default margin in favour of better control in authored CSS */
-body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+body, h1, h2, h3, h4, p, ul, ol, figure, blockquote, dl, dd {
   margin: 0;
 }
 

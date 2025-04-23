@@ -10,13 +10,11 @@
   --color-light-gray: rgba(0, 0, 0, 0.1);
 
   --font-family: "Roboto Mono", serif;
-  --font-size-small: 14px;
-  --font-size-normal: 16px;
-  --font-size-medium: 18px;
-  --font-size-large: 20px;
+  --font-size-small: 0.875em;
+  --font-size-normal: 1em;
+  --font-size-medium: 1.125em;
+  --font-size-large: 1.25em;
 
   --border-radius: 4px;
   --transition-duration: 0.2s;
-
-  --menu-width: 320px;
 }

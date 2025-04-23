@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--padding-small);
+  padding: var(--padding-small) var(--padding-normal);
   background-color: var(--color-light-gray);
   outline: 1px solid var(--color-black);
   border-radius: var(--border-radius);
@@ -24,12 +24,14 @@
 }
 
 .nav__section-title {
-  font-weight: 600;
   font-size: var(--font-size-medium);
 }
 
 .nav__section-indicator {
-  width: 1em;
+  width: var(--font-size-medium);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  border-radius: var(--border-radius);
   transition: transform var(--transition-duration) ease;
 }
 
@@ -48,10 +50,21 @@
   flex-direction: column;
   gap: var(--padding-small);
   padding: var(--padding-small);
+  counter-reset: ol-counter;
 }
 
 .nav__section-link {
+  font-size: var(--font-size-normal);
+  counter-increment: ol-counter;
   transition: color var(--transition-duration) ease;
+}
+
+.nav__section-link::before {
+  content: "[" counter(ol-counter) "]";
+  display: inline-block;
+  padding-right: var(--padding-small);
+  font-size: var(--font-size-small);
+  color: var(--color-gray);
 }
 
 .nav__section-link:hover {

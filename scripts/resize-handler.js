@@ -9,6 +9,7 @@ const updateSizes = (header, main, mainInner) => {
 const initializeSizeUpdates = (header, main, mainInner) => {
     updateSizes(header, main, mainInner);
     window.addEventListener('resize', () => updateSizes(header, main, mainInner));
+    window.addEventListener('orientationchange', () => updateSizes(headerElem, mainElem, mainInnerElem));
 };
 
 export { initializeSizeUpdates };

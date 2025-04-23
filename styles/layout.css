@@ -4,36 +4,41 @@
   position: fixed;
   width: 100%;
   display: grid;
-  grid-template-columns: var(--menu-width) 1fr auto;
-  grid-gap: var(--padding-medium);
+  grid-template-columns: 320px 1fr auto;
+  padding: var(--padding-small) 0;
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-black);
   z-index: 999;
   /* transform: translateY(0); */
   transition: transform var(--transition-duration) ease;
-  will-change: transform;
+  /* will-change: transform; */
 }
 
 .menu {
   position: fixed;
-  min-width: var(--menu-width);
-  max-width: var(--menu-width);
+  /* top: 0; */
+  /* bottom: 0; */
+  /* min-width: var(--menu-width);
+  max-width: var(--menu-width); */
+  width: 320px;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  gap: var(--padding-medium);
   margin-top: var(--header-height, 0);
+  padding: var(--padding-medium);
   background-color: var(--color-white);
   border-right: 1px solid var(--color-black);
   transition: left var(--transition-duration) ease, transform var(--transition-duration) ease;
   z-index: 999;
   /* transform: translateY(0); */
-  will-change: transform;
+  /* will-change: transform; */
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  padding-left: var(--menu-width);
+  /* padding-left: var(--menu-width); */
   transition: padding-left var(--transition-duration) ease;
 }
 
