@@ -1,13 +1,18 @@
-@import './reset.css';
-@import './layout.css';
-@import './loader.css';
-@import './media.css';
+/* Components */
+@import './components/reset.css';
+@import './components/layout.css';
+@import './components/loader.css';
+@import './components/error.css';
+@import './components/media.css';
 
+/* Root sections */
 @import './root-sections/header.css';
 @import './root-sections/menu.css';
 @import './root-sections/main.css';
 @import './root-sections/footer.css';
 
+/* Main sections */
 @import './main-sections/page.css';
 
+/* Menu sections */
 @import './menu-sections/navigation.css';

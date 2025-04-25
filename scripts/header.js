@@ -1,20 +1,21 @@
-const initializeHeaderBehavior = (headerElem, menuElem) => {
-    const root = document.documentElement;
-    let headerHeight = headerElem.offsetHeight;
+export const initializeHeaderBehavior = (headerElem, menuElem) => {
     let lastScrollY = window.scrollY;
     let isHeaderHidden = false;
+    let headerHeight = headerElem.offsetHeight;
 
-    root.style.setProperty('--header-height', `${headerHeight}px`);
+    const updateHeaderHeight = () => {
+        headerHeight = headerElem.offsetHeight;
+    };
 
     const showHeader = () => {
-        headerElem.style.transform = 'translateY(0)';
-        menuElem.style.transform = 'translateY(0)';
+        headerElem.style.top = '0';
+        menuElem.style.top = `${headerHeight}px`;
         isHeaderHidden = false;
     };
 
     const hideHeader = () => {
-        headerElem.style.transform = `translateY(-${headerHeight}px)`;
-        menuElem.style.transform = `translateY(-${headerHeight}px)`;
+        headerElem.style.top = `${-headerHeight}px`;
+        menuElem.style.top = '0';
         isHeaderHidden = true;
     };
 
@@ -43,6 +44,6 @@ const initializeHeaderBehavior = (headerElem, menuElem) => {
     setDefaultHeaderPosition();
 
     window.addEventListener('scroll', updateHeaderPosition);
+    window.addEventListener('resize', updateHeaderHeight);
+    window.addEventListener('resize', setDefaultHeaderPosition);
 };
-
-export { initializeHeaderBehavior };

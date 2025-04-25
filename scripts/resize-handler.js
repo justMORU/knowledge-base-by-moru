@@ -6,10 +6,8 @@ const updateSizes = (header, main, mainInner) => {
     mainInner.style.minHeight = `${viewportHeight - headerHeight}px`;
 };
 
-const initializeSizeUpdates = (header, main, mainInner) => {
+export const initializeSizeUpdates = (header, main, mainInner) => {
     updateSizes(header, main, mainInner);
     window.addEventListener('resize', () => updateSizes(header, main, mainInner));
     window.addEventListener('orientationchange', () => updateSizes(headerElem, mainElem, mainInnerElem));
 };
-
-export { initializeSizeUpdates };

@@ -9,7 +9,7 @@ const setDefaultMenuToggleIconPos = (closeIcon, openIcon) => {
         closeIcon.style.transform = 'translateX(-100%)';
         openIcon.style.transform = 'translateX(-100%)';
     }
-}
+};
 
 const openMenu = (main, openIcon, closeIcon, menu) => {
     menu.style.left = '0';
@@ -23,7 +23,7 @@ const openMenu = (main, openIcon, closeIcon, menu) => {
     }
 
     isMenuOpened = true;
-}
+};
 
 const closeMenu = (main, openIcon, closeIcon, menu) => {
     menu.style.left = -menu.offsetWidth + 'px';
@@ -33,7 +33,7 @@ const closeMenu = (main, openIcon, closeIcon, menu) => {
     main.style.paddingLeft = '0';
 
     isMenuOpened = false;
-}
+};
 
 const toggleDefaultMenuPos = (main, openIcon, closeIcon, menu) => {
     isOnSmallScreen = document.documentElement.clientWidth > 1000 ? false : true;
@@ -53,7 +53,7 @@ const toggleDefaultMenuPos = (main, openIcon, closeIcon, menu) => {
     } else {
         closeMenu(main, openIcon, closeIcon, menu);
     }
-}
+};
 
 const toggleMenu = (main, openIcon, closeIcon, menu) => {
     if (isMenuOpened) {
@@ -63,9 +63,9 @@ const toggleMenu = (main, openIcon, closeIcon, menu) => {
     }
 
     sessionStorage.setItem('isMenuOpened', isMenuOpened);
-}
+};
 
-const initializeMenuBehavior = (main, toggle, openIcon, closeIcon, menu) => {
+export const initializeMenuBehavior = (main, toggle, openIcon, closeIcon, menu) => {
     toggleDefaultMenuPos(
         main,
         openIcon,
@@ -91,5 +91,3 @@ const initializeMenuBehavior = (main, toggle, openIcon, closeIcon, menu) => {
         );
     });
 };
-
-export { initializeMenuBehavior };

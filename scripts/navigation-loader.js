@@ -1,12 +1,11 @@
-import { createElement, createLoader } from './components.js';
+import { createElement } from './components.js';
 import { showPage } from './page-loader.js';
 
-const addNavSection = (navSectionData, pagesPath, pagesData, navElem, pageTitleElem, pageDescriptionElem, pageContentElem) => {
-
+const addNavSection = (pagesConfig, pagesPath, navSectionConfig, resourceManager, navElem, mainInnerElem) => {
     const navSectionElem = createElement('div', ['nav__section']);
     const navSectionHeaderElem = createElement('div', ['nav__section-header']);
     const navSectionTitleElem = createElement('p', ['nav__section-title']);
-    navSectionTitleElem.textContent = navSectionData.title;
+    navSectionTitleElem.textContent = navSectionConfig.title;
     const navSectionIndicatorElem = createElement('img', ['nav__section-indicator'], {
         src: 'assets/icons/dropdown-arrow-24.svg',
         alt: 'toggle',
@@ -21,12 +20,12 @@ const addNavSection = (navSectionData, pagesPath, pagesData, navElem, pageTitleE
     navSectionElem.appendChild(navSectionContentElem);
     navSectionContentElem.appendChild(navSectionContentInnerElem);
 
-    navSectionData.pages.forEach((pageURL) => {
+    navSectionConfig['pages'].forEach((pageURL) => {
         const navLink = createElement('li', ['nav__section-link']);
-        if (pageURL && pagesData[pageURL]) {
-            navLink.textContent = pagesData[pageURL].title;
+        if (pageURL && pagesConfig[pageURL]) {
+            navLink.textContent = pagesConfig[pageURL]['title'];
             navLink.addEventListener('click', () => {
-                showPage(pagesPath, pagesData[pageURL], pageURL, pageTitleElem, pageDescriptionElem, pageContentElem);
+                showPage(pagesConfig[pageURL], pagesPath, pageURL, resourceManager, mainInnerElem);
             });
         } else {
             navLink.classList.add('inactive');
@@ -42,27 +41,11 @@ const addNavSection = (navSectionData, pagesPath, pagesData, navElem, pageTitleE
     });
 };
 
-const initializeNavigation = (pagesData, navData, pagesPath, pageTitleElem, pageDescriptionElem, pageContentElem, menuContentElem) => {
-    menuContentElem.innerHTML = '';
-    const loader = createLoader();
-    menuContentElem.appendChild(loader);
-
+export const initializeNavigation = (pagesConfig, pagesPath, navigationConfig, resourceManager, mainInnerElem, menuContentElem) => {
     const navElem = createElement('nav', ['nav'])
     menuContentElem.appendChild(navElem);
 
-    // Add sections with a delay for animation
-    Promise.all(navData['nav-sections'].map((section, index) => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                addNavSection(section, pagesPath, pagesData, navElem, pageTitleElem, pageDescriptionElem, pageContentElem);
-                resolve();
-            }, index * 10);
-        });
-    })).then(() => {
-        // Delete loader
-        menuContentElem.innerHTML = '';
-        menuContentElem.appendChild(navElem);
+    navigationConfig['nav-sections'].forEach(navSectionConfig => {
+        addNavSection(pagesConfig, pagesPath, navSectionConfig, resourceManager, navElem, mainInnerElem);
     });
-}
-
-export { initializeNavigation }
+};

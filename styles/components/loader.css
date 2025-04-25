@@ -1,0 +1,27 @@
+@import './variables.css';
+
+.loader {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader__spinner {
+  width: 1.8em;
+  height: 1.8em;
+  border: 0.2em solid var(--color-light-gray);
+  border-radius: 50%;
+  border-top-color: var(--color-black);
+  animation: spin 1s ease-in-out infinite;
+}
+
+.loader__text {
+  margin-left: var(--padding-medium);
+  font-size: var(--font-size-medium);
+  color: var(--color-black);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

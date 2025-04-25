@@ -1,11 +1,13 @@
 import { initializeSizeUpdates } from './resize-handler.js';
 import { initializeHeaderBehavior } from './header.js';
 import { initializeMenuBehavior } from './menu.js';
-import { createElement } from './components.js';
+import { ResourceManager } from './resource-manager.js';
 import { initializeNavigation } from './navigation-loader.js';
 import { initializePages } from './page-loader.js';
 
 document.addEventListener("DOMContentLoaded", () => {
+    const resourceManager = new ResourceManager();
+
     const headerElem = document.querySelector('.header');
     const mainElem = document.querySelector('.main');
     const mainInnerElem = document.querySelector('.main__inner');
@@ -14,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuToggleElem = document.querySelector('.header__menu-toggle');
     const menuToggleOpenIconElem = document.querySelector('.header__menu-toggle-icon--open');
     const menuToggleCloseIconElem = document.querySelector('.header__menu-toggle-icon--close');
+
+    const pagesPath = 'pages/';
+    const configPath = 'config/';
+    const pagesConfigPath = configPath + 'pages.json';
+    const navigationConfigPath = configPath + 'navigation.json';
 
     initializeSizeUpdates(
         headerElem,
@@ -31,45 +38,39 @@ document.addEventListener("DOMContentLoaded", () => {
         menuElem
     );
 
-    // Initialize pages
-    const pagesPath = 'pages/';
-    const dataPath = 'config/';
-    const pagesDataPath = dataPath + 'pages.json';
-    const navDataPath = dataPath + 'navigation.json';
+    (async () => {
+        try {
+            const pagesConfig = await resourceManager.loadResource({
+                url: `${pagesConfigPath}`,
+                type: 'json',
+                loadingText: 'Loading pages configuration...',
+                errorText: 'Failed to load pages configuration'
+            });
 
-    Promise.all([fetch(pagesDataPath).then((res) => res.json()), fetch(navDataPath).then((res) => res.json())])
-        .then(([pagesData, navData]) => {
-            const pageElem = createElement('div', ['page']);
-            const pageHeaderElem = createElement('div', ['page__header']);
-            const pageTitleElem = createElement('p', ['page__title']);
-            const pageDescriptionElem = createElement('p', ['page__description']);
-            const pageContentElem = createElement('div', ['page__content']);
-
-            mainInnerElem.appendChild(pageElem);
-            pageElem.appendChild(pageHeaderElem);
-            pageElem.appendChild(pageContentElem);
-            pageHeaderElem.appendChild(pageTitleElem);
-            pageHeaderElem.appendChild(pageDescriptionElem);
+            const navigationConfig = await resourceManager.loadResource({
+                url: `${navigationConfigPath}`,
+                type: 'json',
+                loadingText: 'Loading navigation configuration...',
+                errorText: 'Failed to load navigation configuration'
+            });
 
             initializePages(
                 pagesPath,
-                pagesData,
-                pageTitleElem,
-                pageDescriptionElem,
-                pageContentElem
+                pagesConfig,
+                resourceManager,
+                mainInnerElem
             );
 
             initializeNavigation(
-                pagesData,
-                navData,
+                pagesConfig,
                 pagesPath,
-                pageTitleElem,
-                pageDescriptionElem,
-                pageContentElem,
+                navigationConfig,
+                resourceManager,
+                mainInnerElem,
                 menuContentElem
             );
-        })
-        .catch((error) => {
-            console.error('Error initializing pages or navigation:', error);
-        });
+        } catch (error) {
+            console.error('Application initialization failed:', error);
+        }
+    })();
 });

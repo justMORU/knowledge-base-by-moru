@@ -1,4 +1,4 @@
-@import '../variables.css';
+@import '../components/variables.css';
 
 .header__left {
   display: grid;
@@ -36,4 +36,4 @@
 
 .header__center { }
 
-.header__center { }
+.header__right { }

@@ -1,79 +1,103 @@
-import { loadResource, cleanupOldResources, createLoader } from './components.js';
+import { createElement } from './components.js';
 
-const showPage = (pagesPath, pageData, pageURL, pageTitleElem, pageDescriptionElem, pageContentElem) => {
-    pageTitleElem.innerHTML = '';
-    const pageTitleLoader = createLoader();
-    pageTitleElem.appendChild(pageTitleLoader);
+const showPage = async (pageConfig, pagesPath, pageURL, resourceManager, mainInnerElem) => {
+    mainInnerElem.innerHTML = '';
 
-    pageDescriptionElem.innerHTML = '';
-    const pageDescriptionLoader = createLoader();
-    pageDescriptionElem.appendChild(pageDescriptionLoader);
+    const html = await resourceManager.loadResource({
+        url: `${pagesPath}${pageURL}/index.html`,
+        type: 'html',
+        container: mainInnerElem,
+        loadingText: 'Loading page...',
+        errorText: 'Failed to load page'
+    });
 
-    pageContentElem.innerHTML = '';
-    const pageContentLoader = createLoader();
-    pageContentElem.appendChild(pageContentLoader);
+    const pageElem = createElement('div', ['page']);
+    const pageHeaderElem = createElement('div', ['page__header']);
+    const pageTitleElem = createElement('p', ['page__title']);
+    const pageDescriptionElem = createElement('p', ['page__description']);
+    const pageContentElem = createElement('div', ['page__content']);
 
-    if (!pageData) {
-        showPage(
-            pagesPath,
-            {
-                title: 'Error 404 (Page not found)',
-                'last-updated-time': '-',
-            },
-            '404',
-            pageTitleElem,
-            pageDescriptionElem,
-            pageContentElem
-        );
-        return;
-    }
+    mainInnerElem.appendChild(pageElem);
+    pageElem.appendChild(pageHeaderElem);
+    pageElem.appendChild(pageContentElem);
+    pageHeaderElem.appendChild(pageTitleElem);
+    pageHeaderElem.appendChild(pageDescriptionElem);
 
-    // Add URL in history
-    window.history.pushState({ page: pageURL }, '', `?page=${pageURL}`);
+    pageTitleElem.textContent = pageConfig['title'] || '';
+    pageDescriptionElem.textContent = `Last updated: ${pageConfig['last-updated-time'] || '-'}`;
+    pageContentElem.innerHTML = html;
 
-    fetch(`${pagesPath}${pageURL}/index.html`)
-        .then((response) => response.text())
-        .then((html) => {
-            pageTitleElem.innerHTML = pageData.title;
-            pageDescriptionElem.innerHTML = `Last updated: ${pageData['last-updated-time']}`;
-            pageContentElem.innerHTML = html;
+    await resourceManager.loadResource({
+        url: `${pagesPath}${pageURL}/styles.css`,
+        type: 'css',
+        loadingText: 'Loading page styles...',
+        errorText: 'Failed to load page styles'
+    }).catch(() => console.log(`No styles found for page ${pageURL}`));
 
-            cleanupOldResources(pageURL);
+    await resourceManager.loadResource({
+        url: `${pagesPath}${pageURL}/script.js`,
+        type: 'js',
+        loadingText: 'Loading page script...',
+        errorText: 'Failed to load page script'
+    }).catch(() => console.log(`No script found for page ${pageURL}`));
 
-            // Load styles.css
-            loadResource('link', `${pagesPath}${pageURL}/styles.css`, 'page-style', pageURL, document.head);
 
-            // Load script.js
-            loadResource('script', `${pagesPath}${pageURL}/script.js`, 'page-script', pageURL, document.body);
-        })
-        .catch((error) => {
-            console.error('Error loading page:', error);
-        });
+    window.history.pushState(
+        { page: pageURL },
+        '',
+        `${window.location.pathname}?page=${pageURL}`
+    );
 };
 
-const initializePages = (pagesPath, pagesData, pageTitleElem, pageDescriptionElem, pageContentElem) => {
+const initializePages = (pagesPath, pagesConfig, resourceManager, mainInnerElem) => {
     const defaultPageURL = 'home';
     const initialPageURL = new URL(window.location).searchParams.get('page') || defaultPageURL;
 
     const loadPageFromURL = (isPopState = false) => {
         const currentPageURL = new URL(window.location).searchParams.get('page') || defaultPageURL;
-        const pageData = pagesData[currentPageURL];
+        const pageConfig = pagesConfig[currentPageURL];
 
         if (!isPopState) {
-            window.history.pushState({ page: currentPageURL }, '', `?page=${currentPageURL}`);
+            window.history.pushState(
+                { page: pageURL },
+                '',
+                `${window.location.pathname}?page=${pageURL}`
+            );
         }
 
-        showPage(pagesPath, pageData, currentPageURL, pageTitleElem, pageDescriptionElem, pageContentElem);
+        showPage(pageConfig, pagesPath, currentPageURL, resourceManager, mainInnerElem);
     };
 
     // Initial page loading
-    window.history.replaceState({ page: initialPageURL }, '', `?page=${initialPageURL}`);
+    window.history.replaceState(
+        { page: initialPageURL },
+        '',
+        `?page=${initialPageURL}`
+    );
     loadPageFromURL(true);
 
+    // Browser navigation handler
     window.addEventListener('popstate', (event) => {
         const state = event.state;
+        const pageURL = state.page;
+        const pageConfig = pagesConfig[pageURL];
+
         if (state && state.page) {
-            showPage(pagesData[state.page], state.page, pageTitleElem, pageDescriptionElem, pageContentElem);
+            showPage(pageConfig, pagesPath, pageURL, resourceManager, mainInnerElem);
+        }
+    });
+
+    // Preventing the standard link behavior
+    document.addEventListener('click', (event) => {
+        const link = event.target.closest('a');
+        if (link && link.href && link.href.includes('?page=')) {
+            event.preventDefault();
+            const url = new URL(link.href);
+            const pageURL = url.searchParams.get('page');
+            const pageConfig = pagesConfig[pageURL];
+            if (pageConfig) {
+                showPage(pageConfig, pagesPath, pageURL, resourceManager, mainInnerElem);
+            }
         }
     });
 };

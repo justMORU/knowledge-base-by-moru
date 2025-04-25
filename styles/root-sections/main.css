@@ -1,6 +1,7 @@
-@import '../variables.css';
+@import '../components/variables.css';
 
 .main__inner {
+  position: relative;
   flex-grow: 1;
   width: 100%;
   max-width: 1200px;
@@ -13,7 +14,6 @@
 .page {
   flex-grow: 1;
   width: 100%;
-  /* margin: 0 auto; */
   display: inherit;
   flex-direction: inherit;
   gap: var(--padding-medium);

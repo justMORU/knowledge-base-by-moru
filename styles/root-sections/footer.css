@@ -1,4 +1,4 @@
-@import '../variables.css';
+@import '../components/variables.css';
 
 .main__footer-copyright {
   font-size: var(--font-size-normal);

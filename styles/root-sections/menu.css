@@ -1,4 +1,4 @@
-@import '../variables.css';
+@import '../components/variables.css';
 
 .menu__header { }
 .menu__title {
@@ -6,6 +6,7 @@
   font-size: var(--font-size-medium);
 }
 .menu__content {
+  position: relative;
   flex-grow: 1;
   display: inherit;
   flex-direction: inherit;

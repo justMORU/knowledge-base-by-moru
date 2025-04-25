@@ -1,4 +1,4 @@
-@import '../variables.css';
+@import '../components/variables.css';
 
 .page__content {
   display: flex;
@@ -19,4 +19,18 @@
 
 .paragraph__text {
   font-size: var(--font-size-normal);
+}
+
+.page__link {
+  transition: color var(--transition-duration) ease, text-decoration var(--transition-duration) ease;
+}
+
+.page__link:link, .page__link:visited {
+  color: rgb(45, 65, 255);
+  text-decoration: none;
+}
+
+.page__link:hover, .page__link:active {
+  color: rgb(100, 115, 250);
+  text-decoration: underline;
 }

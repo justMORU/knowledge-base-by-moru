@@ -9,19 +9,13 @@
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-black);
   z-index: 999;
-  /* transform: translateY(0); */
-  transition: transform var(--transition-duration) ease;
-  /* will-change: transform; */
+  transition: top var(--transition-duration) ease;
 }
 
 .menu {
   position: fixed;
-  /* top: 0; */
-  /* bottom: 0; */
-  /* min-width: var(--menu-width);
-  max-width: var(--menu-width); */
+  bottom: 0;
   width: 320px;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   gap: var(--padding-medium);
@@ -29,16 +23,13 @@
   padding: var(--padding-medium);
   background-color: var(--color-white);
   border-right: 1px solid var(--color-black);
-  transition: left var(--transition-duration) ease, transform var(--transition-duration) ease;
+  transition: left var(--transition-duration) ease, top var(--transition-duration) ease;
   z-index: 999;
-  /* transform: translateY(0); */
-  /* will-change: transform; */
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  /* padding-left: var(--menu-width); */
   transition: padding-left var(--transition-duration) ease;
 }
 

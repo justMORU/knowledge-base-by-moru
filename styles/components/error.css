@@ -1,0 +1,11 @@
+.error {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  font-size: var(--font-size-medium);
+  color: var(--color-black);
+}
