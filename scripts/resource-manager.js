@@ -3,7 +3,23 @@ export class ResourceManager {
         this.cache = new Map();
     }
 
-    async loadResource({ url, type, container = null, loadingText = 'Loading...', errorText = 'Failed to load resource' }) {
+    async loadResource(config) {
+        const {
+            url,
+            type = 'json',
+            container = null,
+            loadingText = 'Loading...',
+            errorText = 'Failed to load resource'
+        } = config;
+
+        // Check cache
+        if (this.cache.has(url)) {
+            return this.cache.get(url);
+        }
+
+        // Show loader if container provided
+        const loader = container ? this._showLoader(container, loadingText) : null;
+
         try {
             const response = await fetch(url);
             if (!response.ok) {
@@ -12,22 +28,29 @@ export class ResourceManager {
 
             const content = await response.text();
 
+            let result;
             switch (type) {
-                case 'html':
-                    return content;
                 case 'json':
-                    return JSON.parse(content);
+                    result = JSON.parse(content);
+                    break;
                 case 'css':
-                    this._injectCSS(content, url);
-                    return true;
+                    result = this._injectCSS(content, url);
+                    break;
                 case 'js':
-                    await this._executeScript(content, url);
-                    return true;
+                    result = await this._executeScript(content, url);
+                    break;
                 default:
-                    return content;
+                    result = content;
             }
+
+            // Cache result
+            this.cache.set(url, result);
+
+            // Remove loader
+            if (loader) loader.remove();
+
+            return result;
         } catch (error) {
-            console.error(`Failed to load ${url}:`, error);
             if (container) {
                 this._showError(container, errorText);
             }
@@ -68,8 +91,23 @@ export class ResourceManager {
         });
     }
 
-    _showError(container, message) {
-        container.innerHTML = `<div class="error">${message}</div>`;
+    _showLoader(container, text) {
+        const loader = document.createElement('div');
+        loader.className = 'loader';
+        loader.innerHTML = `
+            <div class="loader__spinner"></div>
+            <div class="loader__text">${text}</div>
+        `;
+        container.appendChild(loader);
+        return loader;
+    }
+
+    _showError(container, text) {
+        const error = document.createElement('div');
+        error.className = 'error';
+        error.textContent = text;
+        container.innerHTML = '';
+        container.appendChild(error);
     }
 
     clearCache(url = null) {

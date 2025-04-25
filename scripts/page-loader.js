@@ -27,6 +27,13 @@ const showPage = async (pageConfig, pagesPath, pageURL, resourceManager, mainInn
     pageDescriptionElem.textContent = `Last updated: ${pageConfig['last-updated-time'] || '-'}`;
     pageContentElem.innerHTML = html;
 
+    // Only before loading other resources!
+    window.history.pushState(
+        { page: pageURL },
+        '',
+        `${window.location.pathname}?page=${pageURL}`
+    );
+
     await resourceManager.loadResource({
         url: `${pagesPath}${pageURL}/styles.css`,
         type: 'css',
@@ -42,11 +49,7 @@ const showPage = async (pageConfig, pagesPath, pageURL, resourceManager, mainInn
     }).catch(() => console.log(`No script found for page ${pageURL}`));
 
 
-    window.history.pushState(
-        { page: pageURL },
-        '',
-        `${window.location.pathname}?page=${pageURL}`
-    );
+
 };
 
 const initializePages = (pagesPath, pagesConfig, resourceManager, mainInnerElem) => {
@@ -88,18 +91,18 @@ const initializePages = (pagesPath, pagesConfig, resourceManager, mainInnerElem)
     });
 
     // Preventing the standard link behavior
-    document.addEventListener('click', (event) => {
-        const link = event.target.closest('a');
-        if (link && link.href && link.href.includes('?page=')) {
-            event.preventDefault();
-            const url = new URL(link.href);
-            const pageURL = url.searchParams.get('page');
-            const pageConfig = pagesConfig[pageURL];
-            if (pageConfig) {
-                showPage(pageConfig, pagesPath, pageURL, resourceManager, mainInnerElem);
-            }
-        }
-    });
+    // document.addEventListener('click', (event) => {
+    //     const link = event.target.closest('a');
+    //     if (link && link.href && link.href.includes('?page=')) {
+    //         event.preventDefault();
+    //         const url = new URL(link.href);
+    //         const pageURL = url.searchParams.get('page');
+    //         const pageConfig = pagesConfig[pageURL];
+    //         if (pageConfig) {
+    //             showPage(pageConfig, pagesPath, pageURL, resourceManager, mainInnerElem);
+    //         }
+    //     }
+    // });
 };
 
 export { initializePages, showPage };
